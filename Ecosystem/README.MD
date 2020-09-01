@@ -4,7 +4,7 @@
    <h1>Ecosystem</h1> 
     <body>
       <p>Hello, the following .m program was written in MATLAB to simulate an echo system.
-  The goal of the project was to create intelligent enough basic creatures, that their population would follow the <i><strong>Lokta-Volterra</strong></i> predator prey models.</p>
+  The goal of the project was to create intelligent enough basic creatures, that their population would follow the <i><strong>Lotka-Volterra</strong></i> predator prey models.</p>
 
   The current objects within the program are:
   - Plants, they grow over time.
