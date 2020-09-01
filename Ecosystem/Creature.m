@@ -45,6 +45,7 @@ classdef Creature
         food_location = [];
         % List of unformatted objects
         entities_close = [];
+        entities_dist= [];
         
     end
     
@@ -64,8 +65,7 @@ classdef Creature
             object_dist = [];
             
             for i = 1:size(temp_object_locations,1)
-                object_dist(end+1) = pdist2(location,temp_object_locations(i,:));
-                
+                object_dist(end+1) = pdist2(obj.location,temp_object_locations(i,:));
             end
             
             close_objects_ind = find(object_dist<= obj.sight_range);
@@ -249,24 +249,73 @@ classdef Creature
         
         % Act
         function process_action(obj)
-            amalgam = [obj.friendlies_close,]
+            
+            % Which action to select
             switch obj.action
                 
                 case "rep"
-                    
+                    child_selection = false;
+                    loc_selection = false;
+                    loc_temp = false;
+                    % Is someone already near, then produce child
                     if obj.closest_friend == 1
-                        selection = false;
-                        while ~selection
+                        child_selection = false;
+                        count = 0;
+                        
+                        while ~child_selection
                             y_child = obj.location(1) + randi([-1, 1]);
                             x_child = obj.location(2) + randi([-1, 1]);
                             
-                            for i = 1:obj.d
-                                if sum([y_child, x_child] == d)
+                            % Iterate through near by positions to find
+                            % spawn point
+                            for i = 1:numel(obj.entities_close)
+                                xy = obj.entities_close(i);
+                                y = xy(1);
+                                x = xy(2);
+                                
+                                if (x_child ~= x) && (y_child ~= y)
+                                    child_selection = true;
                                     
                                 end
+                                
+                            end
+                            count = count + 1;
+                            
+                            % If limit reached, stop looking
+                            if count == 8
+                                break
                             end
                         end
                     end
+                    
+                    % If friendly is not near, move closer
+                    while ~loc_selection && loc_temp    
+                        y_temp = obj.location(1) + randi([-1, 1]);
+                        x_temp = obj.location(2) + randi([-1, 1]);
+                        
+                        % Iterate through near by positions to find
+                        % spawn point
+                        for i = 1:numel(obj.entities_close)
+                            xy = obj.entities_close(i);
+                            y = xy(1);
+                            x = xy(2);
+                            
+                            if (x_temp ~= x) && (y_temp ~= y)
+                                loc_temp = true;
+                                
+                            end
+                            
+                        end
+                        
+                        % Iteratre through pos
+                        count = count + 1;
+                        
+                        % If limit reached, stop looking
+                        if count == 8
+                            break
+                        end
+                    end
+                    
                     
                 case "rest"
                     
