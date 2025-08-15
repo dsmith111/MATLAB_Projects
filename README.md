@@ -7,6 +7,7 @@ This repository will contain any projects I create using MATLAB.
   <li> Basic Ecosystem
     <ul>
       <li>Project on low level Lotka-Volterra modeling in MATLAB through a focus on creature behavior. </li>
+      <li><strong>🐍 Now available in Python!</strong> - See the <code>Ecosystem_Python/</code> folder for a complete Python port with enhanced performance and features.</li>
     </ul>
   </li>
   <li> Conway's game of life
